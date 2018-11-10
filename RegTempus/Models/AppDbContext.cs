@@ -15,6 +15,7 @@ namespace RegTempus.Models
 
         }
         public DbSet<User> Users { get; set; }
+
         public DbSet<TimeMeasurement> TimeMeasurements { get; set; }
     }
 }
