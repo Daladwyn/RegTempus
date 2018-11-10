@@ -8,7 +8,7 @@ namespace RegTempus.Interfaces
 {
     public interface IRegTempus
     {
-        void CreateNewMeasurement(DateTime startTime);
-        void CompleteTimeMeasurement(DateTime endTime);
+        void CreateNewMeasurement(DateTime TimeStart);
+        void CompleteTimeMeasurement(DateTime TimeStop, int TimeMeasurementId);
     }
 }
