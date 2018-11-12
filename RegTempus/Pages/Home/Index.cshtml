@@ -1,0 +1,13 @@
+﻿@page
+@model RegTempus.Pages.Home.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>To start the clock, press the button.</p>
+
+<a asp-controller="Home" asp-action="StartTime" class="btn btn-primary">Start</a>
+
