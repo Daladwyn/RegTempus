@@ -9,9 +9,9 @@ namespace RegTempus.Repositories
 {
     public class RegTempusRepository : IRegTempus
     {
-        private readonly AppDbContext _appDbContext;
+        private readonly RegTempusDbContext _appDbContext;
 
-        public RegTempusRepository(AppDbContext appDbContext)
+        public RegTempusRepository(RegTempusDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
@@ -20,9 +20,39 @@ namespace RegTempus.Repositories
             throw new NotImplementedException();
         }
 
+        public TimeMeasurement CompleteTimeMeasurement(TimeMeasurement timeStop)
+        {
+            throw new NotImplementedException();
+        }
+
         public void CreateNewMeasurement(DateTime TimeStart)
         {
             //var measurement = new TimeMeasurement();
+            throw new NotImplementedException();
+        }
+
+        public TimeMeasurement CreateNewMeasurement(TimeMeasurement timeStart)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Registrator CreateRegistrator(Registrator user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<TimeMeasurement> GetMonthlyTimeMeasurement(int monthOfYear)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Registrator GetRegistrator(Registrator user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Registrator UpdateRegistrator(Registrator user)
+        {
             throw new NotImplementedException();
         }
     }

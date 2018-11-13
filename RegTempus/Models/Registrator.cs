@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace RegTempus.Models
 {
-    public class User
+    public class Registrator
     {
-        public int UserId { get; set; }
+        public int RegistratorId { get; set; }
+
+        [MaxLength(36)]
+        public string UserId { get; set; }
 
         [MaxLength(30)]
         public string FirstName { get; set; }

@@ -8,7 +8,7 @@ namespace RegTempus.Models
         public int TimeMeasurementId { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public int RegistratorId { get; set; }
 
         public DateTime TimeStart { get; set; }
 

@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace RegTempus.Models
 {
-    public class AppDbContext : IdentityDbContext<IdentityUser>
+    public class RegTempusDbContext : DbContext
+    //public class RegTempusDbContext : IdentityDbContext<IdentityUser>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public RegTempusDbContext(DbContextOptions<RegTempusDbContext> options) : base(options)
         {
 
         }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Registrator> Registrators { get; set; }
 
         public DbSet<TimeMeasurement> TimeMeasurements { get; set; }
     }

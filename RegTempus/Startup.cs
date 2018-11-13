@@ -11,25 +11,26 @@ using Microsoft.Extensions.DependencyInjection;
 using RegTempus.Interfaces;
 using RegTempus.Models;
 using RegTempus.Repositories;
+using RegTempus.Services;
 
 namespace RegTempus
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        public IConfiguration _configuration { get; }
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<RegTempusDbContext>(
+                options => options.UseSqlServer(_configuration.GetConnectionString("RegTempus")));
 
-            services.AddTransient<IRegTempus, RegTempusRepository>();
+            services.AddScoped<IRegTempus, SqlRegTempusData>();
 
             services.AddMvc();
         }
