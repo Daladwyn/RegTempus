@@ -5,9 +5,19 @@
     Layout = "~/Pages/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Register Time.</h2>
 
+@if (true)
+{
 <p>To start the clock, press the button.</p>
 
 <a asp-controller="Home" asp-action="StartTime" class="btn btn-primary">Start</a>
+
+}
+else
+{
+    <p>To stop the clock, press the button.</p>
+
+    <a asp-controller="Home" asp-action="StopTime" class="btn btn-primary">Stop</a>
+}
 
