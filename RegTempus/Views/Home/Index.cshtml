@@ -1,22 +1,26 @@
 ﻿@model UserTimeRegistrationViewModel
 @{
-    
+
     Layout = "~/Views/_Layout.cshtml";
 }
 
 <h2>Register Time.</h2>
 
-@if (Model.UserHaveStartedTimeMeasure==false)
+@if (Model.UserHaveStartedTimeMeasure == false)
 {
-<p>To start the clock, press the button.</p>
-
-<a asp-controller="Home" asp-action="StartTime" class="btn btn-primary">Start</a>
+    <p>Welcome @Model.FirstName @Model.LastName, to start the clock, press the button.</p>
+    <form asp-controller="Home" asp-action="/StartTime" method="post">
+        <input class="btn btn-primary" type="submit" value="Start" />
+        <input type="hidden" value=@Model.UserId name="userId"/>
+    </form>
 
 }
 else
 {
-    <p>To stop the clock, press the button.</p>
-
-    <a asp-controller="Home" asp-action="StopTime" class="btn btn-primary">Stop</a>
+    <p>Welcom @Model.FirstName @Model.LastName, to stop the clock, press the button.</p>
+    <form asp-controller="Home" asp-action="/StopTime" method="post">
+        <input class="btn btn-primary" type="submit" value="Start" />
+        <input type="hidden" value=@Model.UserId  name="userId" />
+    </form>
 }
 

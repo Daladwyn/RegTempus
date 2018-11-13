@@ -12,11 +12,23 @@ namespace RegTempus.Controllers
         public IActionResult Index()
         {
             var UserThatRegisterTime = new UserTimeRegistrationViewModel();
+            UserThatRegisterTime.UserId = 1;
             UserThatRegisterTime.FirstName = "Christian";
             UserThatRegisterTime.LastName = "Levin";
             UserThatRegisterTime.UserHaveStartedTimeMeasure = false;
             return View(UserThatRegisterTime);
         }
 
+        [HttpPost]
+        public IActionResult StartTime(int userId)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult StopTime(int userId)
+        {
+            return View();
+        }
     }
 }
