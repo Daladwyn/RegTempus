@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RegTempus.ViewModels
 {
-    public class RegTempusViewModel
+    public class PresentRegisteredTimeViewModel
     {
 
         [MaxLength(10)]
