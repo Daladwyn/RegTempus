@@ -24,5 +24,8 @@ namespace RegTempus.Models
         [Range(1,12)]
         public int MonthOfYear { get; set; }
 
+        [Range(1900,2100)]
+        public int Year { get; set; }
+
     }
 }
