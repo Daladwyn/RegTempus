@@ -1,13 +1,12 @@
-﻿@page
-@model RegTempus.Pages.Home.IndexModel
+﻿@model UserTimeRegistrationViewModel
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Pages/_Layout.cshtml";
+    
+    Layout = "~/Views/_Layout.cshtml";
 }
 
 <h2>Register Time.</h2>
 
-@if (true)
+@if (Model.UserHaveStartedTimeMeasure==false)
 {
 <p>To start the clock, press the button.</p>
 

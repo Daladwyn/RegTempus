@@ -41,6 +41,8 @@ namespace RegTempus
             app.UseStatusCodePages();
             app.UseStaticFiles();
 
+            app.UseNodeModules(env.ContentRootPath);
+
             app.UseAuthentication();
 
             app.UseMvcWithDefaultRoute();
