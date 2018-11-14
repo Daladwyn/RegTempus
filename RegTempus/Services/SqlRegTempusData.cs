@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RegTempus.Interfaces;
 using RegTempus.Models;
 
 namespace RegTempus.Services

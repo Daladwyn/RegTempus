@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RegTempus.Interfaces;
 using RegTempus.Models;
 using RegTempus.Repositories;
 using RegTempus.Services;
@@ -45,7 +44,7 @@ namespace RegTempus
             services.AddDbContext<RegTempusDbContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("RegTempus")));
 
-            services.AddScoped<IRegTempus, SqlRegTempusData>();
+            services.AddTransient<IRegTempus, SqlRegTempusData>();
 
             services.AddMvc();
         }

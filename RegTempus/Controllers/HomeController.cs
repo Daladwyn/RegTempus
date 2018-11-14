@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RegTempus.Models;
+using RegTempus.Services;
 using RegTempus.ViewModels;
 
 namespace RegTempus.Controllers
@@ -12,48 +14,18 @@ namespace RegTempus.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        //private Registrator _registrator;
 
-        //public HomeController(Registrator registrator)
-        //{
-        //    _registrator = registrator;
-        //}
         public IActionResult Index()
         {
-            Registrator registrator = new Registrator();
-
-            if (User.Identity.IsAuthenticated)
+            ClaimsPrincipal user = User;
+            Registrator registrator = Registrator.GetRegistratorData(user);
+            bool result = Registrator.DoesRegistratorDataExitsInDatabase(registrator);
+            if (result==false)
             {
-                foreach (var Identity in User.Identities)
-                {
-                    foreach (var claim in Identity.Claims)
-                    {
-                        if (claim.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier")
-                        {
-                            registrator.UserId = claim.Value;
-                        }
-                        if (claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname")
-                        {
-                            registrator.FirstName = claim.Value;
-                        }
-                        if (claim.Type== "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname")
-                        {
-                            registrator.LastName = claim.Value;
-                        }
-                    }
-                }
-                
-            
+                registrator=Registrator.CreateNewRegistratorToStore(registrator);
             }
-
-            bool result = Registrator.DoesRegistratorDataExits(registrator);
-            //var UserThatRegisterTime = new UserTimeRegistrationViewModel();
-            //UserThatRegisterTime.RegistratorId = 1;
-            //UserThatRegisterTime.FirstName = "Christian";
-            //UserThatRegisterTime.LastName = "Levin";
-            //UserThatRegisterTime.UserHaveStartedTimeMeasure = false;
-            //return View(UserThatRegisterTime);
-            return View();
+          //konvertera Registrator objekt till UserTimeRegistrationViewModel
+            return View(registrator);
         }
 
 
@@ -61,8 +33,9 @@ namespace RegTempus.Controllers
         [HttpPost]
         public IActionResult StartTime(int userId)
         {
-           
-
+            //leta upp registrator mha userId och sätt att en registration är påbörjad.
+            //Skapa en ny tidsregistrering objekt och sätt start, stop och summa tiden till aktuell tid.
+            //skapa en viewbag med ett framgångsmeddelande.
             return View();
         }
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RegTempus.Repositories
 {
-    public class RegTempusRepository : IRegTempus
+    public class RegTempusRepository// : IRegTempus
     {
         private readonly RegTempusDbContext _appDbContext;
 
@@ -47,6 +47,16 @@ namespace RegTempus.Repositories
         }
 
         public Registrator GetRegistrator(Registrator user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Registrator GetRegistratorBasedOnRegistratorId(Registrator user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Registrator GetRegistratorBasedOnUserId(Registrator user)
         {
             throw new NotImplementedException();
         }
