@@ -41,9 +41,19 @@ namespace RegTempus.Services
             return _context.TimeMeasurements.Where(m => m.MonthOfYear == monthOfYear).ToList();
         }
 
-        public Registrator GetRegistrator(Registrator user)
+        //public Registrator GetRegistrator(Registrator user)
+        //{
+        //    return _context.Registrators.SingleOrDefault(r => r.RegistratorId == user.RegistratorId);
+        //}
+
+        public Registrator GetRegistratorBasedOnRegistratorId(Registrator user)
         {
             return _context.Registrators.SingleOrDefault(r => r.RegistratorId == user.RegistratorId);
+        }
+
+        public Registrator GetRegistratorBasedOnUserId(Registrator user)
+        {
+            return _context.Registrators.SingleOrDefault(r => r.UserId == user.UserId);
         }
 
         public Registrator UpdateRegistrator(Registrator user)

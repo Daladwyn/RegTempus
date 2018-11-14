@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,7 +36,7 @@ namespace RegTempus
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
-            .AddOpenIdConnect(options=>
+            .AddOpenIdConnect(options =>
             {
                 _configuration.Bind("AzureAd", options);
             })
@@ -54,7 +55,7 @@ namespace RegTempus
         {
             if (env.IsDevelopment())
             {
-            app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
             }
 
             app.UseRewriter(new RewriteOptions()
@@ -68,7 +69,14 @@ namespace RegTempus
 
             app.UseAuthentication();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(RouteOptions);
+        }
+
+        private void RouteOptions(IRouteBuilder routes)
+        {
+            routes.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
+
+
         }
     }
 }

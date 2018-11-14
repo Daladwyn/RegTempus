@@ -11,7 +11,8 @@ namespace RegTempus.Interfaces
         TimeMeasurement CreateNewMeasurement(TimeMeasurement timeStart);
         TimeMeasurement CompleteTimeMeasurement(TimeMeasurement timeStop);
         IEnumerable<TimeMeasurement> GetMonthlyTimeMeasurement(int monthOfYear);
-        Registrator GetRegistrator(Registrator user);
+        Registrator GetRegistratorBasedOnRegistratorId(Registrator user);
+        Registrator GetRegistratorBasedOnUserId(Registrator user);
         Registrator UpdateRegistrator(Registrator user);
         Registrator CreateRegistrator(Registrator user);
     }

@@ -12,22 +12,16 @@ namespace RegTempus.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        [AllowAnonymous]
+        //private Registrator _registrator;
+
+        //public HomeController(Registrator registrator)
+        //{
+        //    _registrator = registrator;
+        //}
         public IActionResult Index()
         {
-            var UserThatRegisterTime = new UserTimeRegistrationViewModel();
-            UserThatRegisterTime.RegistratorId = 1;
-            UserThatRegisterTime.FirstName = "Christian";
-            UserThatRegisterTime.LastName = "Levin";
-            UserThatRegisterTime.UserHaveStartedTimeMeasure = false;
-            return View(UserThatRegisterTime);
-        }
-
-        [HttpPost]
-        public IActionResult StartTime(int userId)
-        {
             Registrator registrator = new Registrator();
-            
+
             if (User.Identity.IsAuthenticated)
             {
                 foreach (var Identity in User.Identities)
@@ -38,11 +32,37 @@ namespace RegTempus.Controllers
                         {
                             registrator.UserId = claim.Value;
                         }
+                        if (claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname")
+                        {
+                            registrator.FirstName = claim.Value;
+                        }
+                        if (claim.Type== "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname")
+                        {
+                            registrator.LastName = claim.Value;
+                        }
                     }
                 }
+                
+            
             }
- 
+
+            bool result = Registrator.DoesRegistratorDataExits(registrator);
+            //var UserThatRegisterTime = new UserTimeRegistrationViewModel();
+            //UserThatRegisterTime.RegistratorId = 1;
+            //UserThatRegisterTime.FirstName = "Christian";
+            //UserThatRegisterTime.LastName = "Levin";
+            //UserThatRegisterTime.UserHaveStartedTimeMeasure = false;
+            //return View(UserThatRegisterTime);
+            return View();
+        }
+
+
+
+        [HttpPost]
+        public IActionResult StartTime(int userId)
+        {
            
+
             return View();
         }
 
