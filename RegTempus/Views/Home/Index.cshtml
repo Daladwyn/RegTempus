@@ -5,13 +5,14 @@
 }
 
 <h2>Register Time.</h2>
+@ViewBag.Message
 
 @if (Model.UserHaveStartedTimeMeasure == false)
 {
     <p>Welcome @Model.FirstName @Model.LastName, to start the clock, press the button.</p>
     <form asp-controller="Home" asp-action="/StartTime" method="post">
         <input class="btn btn-primary" type="submit" value="Start" />
-        <input type="hidden" value=@Model.RegistratorId name="userId"/>
+        <input type="hidden" value=@Model.RegistratorId name="registratorId" />
     </form>
 
 }
@@ -19,8 +20,8 @@ else
 {
     <p>Welcom @Model.FirstName @Model.LastName, to stop the clock, press the button.</p>
     <form asp-controller="Home" asp-action="/StopTime" method="post">
-        <input class="btn btn-primary" type="submit" value="Start" />
-        <input type="hidden" value=@Model.RegistratorId  name="userId" />
+        <input class="btn btn-primary" type="submit" value="Stop" />
+        <input type="hidden" value=@Model.RegistratorId name="registratorId" />
     </form>
 }
 
