@@ -14,18 +14,38 @@ namespace RegTempus.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private IRegTempus _iRegTempus;
 
+        //public Registrator() { }
+
+        public HomeController(IRegTempus iRegTempus)
+        {
+            _iRegTempus = iRegTempus;
+        }
         public IActionResult Index()
         {
-            ClaimsPrincipal user = User;
-            Registrator registrator = Registrator.GetRegistratorData(user);
-            bool result = Registrator.DoesRegistratorDataExitsInDatabase(registrator);
-            if (result==false)
+            ClaimsPrincipal user = new ClaimsPrincipal();
+            try
             {
-                registrator=Registrator.CreateNewRegistratorToStore(registrator);
+                user = User;
             }
-          //konvertera Registrator objekt till UserTimeRegistrationViewModel
-            return View(registrator);
+            catch (ArgumentNullException)
+            {
+                ViewBag.ErrorMessage = "No logged in user could be found.";
+                return View();
+            }
+            Registrator registrator = Registrator.GetRegistratorData(user);
+            registrator = _iRegTempus.GetRegistratorBasedOnUserId(registrator);
+            bool result = ((registrator == null) ? false : true);
+            if (result == false)
+            {
+                registrator = Registrator.GetRegistratorData(user);
+                registrator.UserHaveStartedTimeMeasure = false;
+                registrator.StartedTimeMeasurement = 0;
+                registrator = _iRegTempus.CreateRegistrator(registrator);
+            }
+            UserTimeRegistrationViewModel konvertedRegistrator = UserTimeRegistrationViewModel.RestructureTheRegistratorData(registrator);
+            return View(konvertedRegistrator);
         }
 
 

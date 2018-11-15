@@ -9,6 +9,10 @@ namespace RegTempus.Services
     {
         private RegTempusDbContext _context;
 
+        public SqlRegTempusData()
+        {
+        }
+
         public SqlRegTempusData(RegTempusDbContext context)
         {
             _context = context;

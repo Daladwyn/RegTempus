@@ -11,52 +11,21 @@ namespace RegTempus.Models
 {
     public class Registrator
     {
-        private IRegTempus _iRegTempus;
-
-        public Registrator() { }
-
-        public Registrator(IRegTempus iRegTempus)
-        {
-            _iRegTempus = iRegTempus;
-        }
-
         public int RegistratorId { get; set; }
 
         [MaxLength(36)]
         public string UserId { get; set; }
 
-        [MaxLength(30)]
+        [MaxLength(50)]
         public string FirstName { get; set; }
 
-        [MaxLength(30)]
+        [MaxLength(50)]
         public string LastName { get; set; }
 
         public bool UserHaveStartedTimeMeasure { get; set; }
 
         public int StartedTimeMeasurement { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="registrator"></param>
-        internal Registrator CreateNewRegistratorToStore(Registrator registrator)
-        {
-            registrator.UserHaveStartedTimeMeasure = false;
-            registrator.StartedTimeMeasurement = 0;
-            registrator = _iRegTempus.CreateRegistrator(registrator);
-            return registrator;
-        }
-        /// <summary>
-        /// This function asks the database if a User exits based on a ObjectIdentifier
-        /// that is recived from Azure AD.
-        /// </summary>
-        /// <param name="registrator"></param>
-        /// <returns></returns>
-        internal bool DoesRegistratorDataExitsInDatabase(Registrator registrator)
-        {
-            Registrator result = _iRegTempus.GetRegistratorBasedOnUserId(registrator);
-            return ((result == null) ? false : true);
-        }
 
         /// <summary>
         /// This function extracts 3 properties(ObjectIdentifier, Givenname and surname)

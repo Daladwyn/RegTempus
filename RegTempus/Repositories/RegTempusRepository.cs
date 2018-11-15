@@ -1,5 +1,4 @@
-﻿using RegTempus.Interfaces;
-using RegTempus.Models;
+﻿using RegTempus.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
