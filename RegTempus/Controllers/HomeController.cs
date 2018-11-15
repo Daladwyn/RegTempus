@@ -66,7 +66,7 @@ namespace RegTempus.Controllers
                 RegistratorId = registrator.RegistratorId,
                 TimeStart = DateTime.Now,
                 TimeStop = DateTime.Now,
-                TimeRegistered = DateTime.Now,
+                //TimeRegistered = 0,
                 DayOfMonth = DateTime.Today.Day,
                 MonthOfYear = DateTime.Today.Month,
                 Year = DateTime.Today.Year,
@@ -82,9 +82,46 @@ namespace RegTempus.Controllers
         }
 
         [HttpPost]
-        public IActionResult StopTime(int userId)
+        public IActionResult StopTime(int registratorId)
         {
-            return View();
+            Registrator registrator = new Registrator
+            {
+                RegistratorId = registratorId
+            };
+            try
+            {
+                registrator = _iRegTempus.GetRegistratorBasedOnUserId(registrator);
+            }
+            catch (NullReferenceException)
+            {
+                ViewBag.Message = "Fetching your data did not succed. Please make a manual note of present time.";
+                return View();
+            }
+            registrator.UserHaveStartedTimeMeasure = false;
+            //if (registrator == null)
+            //{
+            //}
+            //else
+            //{
+            //}
+            TimeMeasurement measuredTime = _iRegTempus.GetTimeMeasurement(registrator);
+            if (measuredTime == null)
+            {
+                ViewBag.Message = "Fetching your start time did not succed. Please make a manual note of present time.";
+                return View();
+            }
+            else
+            {
+                measuredTime = TimeMeasurement.stopClock(measuredTime);
+            }
+            measuredTime = _iRegTempus.CompleteTimeMeasurement(measuredTime);
+            registrator.StartedTimeMeasurement = 0;
+            registrator = _iRegTempus.UpdateRegistrator(registrator);
+            ViewBag.Message = measuredTime == null ? "Ops, something have occured and you are still working" : "Your have stopped working.";
+            UserTimeRegistrationViewModel konvertedRegistrator = UserTimeRegistrationViewModel.RestructureTheRegistratorData(registrator);
+            return View("Index", konvertedRegistrator);
         }
+
+
     }
 }

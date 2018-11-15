@@ -59,6 +59,11 @@ namespace RegTempus.Services
             return _context.Registrators.SingleOrDefault(r => r.UserId == user.UserId);
         }
 
+        public TimeMeasurement GetTimeMeasurement(Registrator user)
+        {
+            return _context.TimeMeasurements.SingleOrDefault(t => t.TimeMeasurementId == user.StartedTimeMeasurement);
+        }
+
         public Registrator UpdateRegistrator(Registrator user)
         {
             _context.Registrators.Attach(user);

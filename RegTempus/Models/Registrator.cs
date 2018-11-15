@@ -58,5 +58,10 @@ namespace RegTempus.Models
             }
             return registrator;
         }
+        public static Registrator CheckRegistatorData(Registrator registrator)
+        {
+
+            return registrator;
+        }
     }
 }
