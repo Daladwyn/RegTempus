@@ -18,7 +18,7 @@
 }
 else
 {
-    <p>Welcom @Model.FirstName @Model.LastName, to stop the clock, press the button.</p>
+    <p>Welcome @Model.FirstName @Model.LastName, to stop the clock, press the button.</p>
     <form asp-controller="Home" asp-action="/StopTime" method="post">
         <input class="btn btn-primary" type="submit" value="Stop" />
         <input type="hidden" value=@Model.RegistratorId name="registratorId" />

@@ -27,9 +27,21 @@ namespace RegTempus.Models
         [Range(1900, 2100)]
         public int Year { get; set; }
 
-        public static TimeMeasurement startClock(TimeMeasurement measuredTime)
+        public static TimeMeasurement startClock(Registrator registrator)
         {
-            throw new NotImplementedException();
+            TimeMeasurement measuredTime = new TimeMeasurement
+            {
+                TimeMeasurementId = 0,
+                RegistratorId = registrator.RegistratorId,
+                TimeStart = DateTime.Now,
+                TimeStop = DateTime.Now,
+                //TimeRegistered = 0,
+                DayOfMonth = DateTime.Today.Day,
+                MonthOfYear = DateTime.Today.Month,
+                Year = DateTime.Today.Year,
+                TimeType = "Work"
+            };
+            return measuredTime;
         }
 
         public static TimeMeasurement stopClock(TimeMeasurement measuredTime)
