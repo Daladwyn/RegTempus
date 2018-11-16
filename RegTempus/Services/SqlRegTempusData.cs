@@ -39,9 +39,10 @@ namespace RegTempus.Services
             return user;
         }
 
-        public List<TimeMeasurement> GetMonthlyTimeMeasurement(int monthOfYear)
+        public List<TimeMeasurement> GetMonthlyTimeMeasurement(int monthOfYear, Registrator user)
         {
-            return _context.TimeMeasurements.Where(m => m.MonthOfYear == monthOfYear).ToList();
+            List<TimeMeasurement> MonthFulOfRegistrations = _context.TimeMeasurements.Where(m => m.MonthOfYear == monthOfYear).ToList();
+            return MonthFulOfRegistrations.Where(r => r.RegistratorId == user.RegistratorId).ToList();
         }
 
         //public Registrator GetRegistrator(Registrator user)
