@@ -5,23 +5,67 @@
 }
 
 <h2>Register Time.</h2>
-@ViewBag.Message
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.SuccessMessage
+    </div>
+}
+
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+
 
 @if (Model.UserHaveStartedTimeMeasure == false)
 {
-    <p>Welcome @Model.FirstName @Model.LastName, to start the clock, press the button.</p>
+    <span>
+        Welcome @Model.FirstName @Model.LastName,<br />
+        to start the clock, press the button.
+    </span>
     <form asp-controller="Home" asp-action="/StartTime" method="post">
-        <input class="btn btn-primary" type="submit" value="Start" />
-        <input type="hidden" value=@Model.RegistratorId name="registratorId" />
+        <div class="row">
+            <div class="col-5 col-sm-5 col-md-5"></div>
+            <div class="col-2 col-sm-2 col-md-2">
+                <input class="btn btn-success" type="submit" value="Start" />
+                <input type="hidden" value=@Model.RegistratorId name="registratorId" />
+            </div>
+            <div class="col-5 col-sm-5 col-md-5"></div>
+        </div>
     </form>
 
 }
 else
 {
-    <p>Welcome @Model.FirstName @Model.LastName, to stop the clock, press the button.</p>
+    <span>
+        Welcome @Model.FirstName @Model.LastName,<br />
+        to stop the clock, press the button.
+    </span>
     <form asp-controller="Home" asp-action="/StopTime" method="post">
-        <input class="btn btn-primary" type="submit" value="Stop" />
-        <input type="hidden" value=@Model.RegistratorId name="registratorId" />
+        <div class="row">
+            <div class="col-5 col-sm-5 col-md-5"></div>
+            <div class="col-2 col-sm-2 col-md-2">
+                <input class="btn btn-danger" type="submit" value="Stop" />
+                <input type="hidden" value=@Model.RegistratorId name="registratorId" />
+            </div>
+            <div class="col-5 col-sm-5 col-md-5"></div>
+        </div>
     </form>
 }
+<hr />
+<form asp-controller="Home" asp-action="/PresentRegistrations" method="post">
+    <div class="row">
+        <div class="col-5 col-sm-5 col-md-5"></div>
+        <div class="col-2 col-sm-2 col-md-2">
+            <input class="btn btn-secondary" type="submit" value="Time" />
+            <input type="hidden" value=@Model.RegistratorId name="registratorId" />
+        </div>
+        <div class="col-5 col-sm-5 col-md-5"></div>
+    </div>
 
+</form>

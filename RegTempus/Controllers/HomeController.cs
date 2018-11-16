@@ -31,7 +31,7 @@ namespace RegTempus.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewBag.Message = "No logged in user could be found.";
+                ViewBag.ErrorMessage = "No logged in user could be found.";
                 return View();
             }
             Registrator registrator = Registrator.GetRegistratorData(user);
@@ -63,7 +63,7 @@ namespace RegTempus.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewBag.Message = "Error: Did not succed in fetching userdata";
+                ViewBag.ErrorMessage = "Error: Did not succed in fetching userdata";
                 return View("Index");
             }
             registrator.UserHaveStartedTimeMeasure = true;
@@ -75,10 +75,9 @@ namespace RegTempus.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewBag.Message = "Error: Saving the new time registration did not succed";
+                ViewBag.ErrorMessage = "Error: Saving the new time registration did not succed";
                 return View("Index");
             }
-            bool result = timeRegistration.TimeMeasurementId == 0 ? false : true;
             registrator.StartedTimeMeasurement = timeRegistration.TimeMeasurementId;
             try
             {
@@ -86,14 +85,14 @@ namespace RegTempus.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewBag.Message = "Error: Updating your data did not succed";
+                ViewBag.ErrorMessage = "Error: Updating your data did not succed";
                 return View("Index");
             }
             if (registrator.StartedTimeMeasurement != timeRegistration.TimeMeasurementId)
             {
-                ViewBag.Message = "Error: changing your details did not succed";
+                ViewBag.ErrorMessage = "Error: changing your details did not succed";
             }
-            ViewBag.Message = result == true ? "Your time is registered" : "Ops, something have occured and your time is not registered.";
+            ViewBag.SuccessMessage = "Your start time is registered.";
             UserTimeRegistrationViewModel konvertedRegistrator = UserTimeRegistrationViewModel.RestructureTheRegistratorData(registrator);
             return View("Index", konvertedRegistrator);
         }
@@ -112,7 +111,7 @@ namespace RegTempus.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewBag.Message = "Fetching your data did not succed. Please make a manual note of present time.";
+                ViewBag.ErrorMessage = "Error: Fetching your data did not succed. Please make a manual note of present time.";
                 return View("Index");
             }
             registrator.UserHaveStartedTimeMeasure = false;
@@ -122,7 +121,7 @@ namespace RegTempus.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewBag.Message = "Fetching your start time did not succed. Please make a manual note of present time.";
+                ViewBag.ErrorMessage = "Error: Fetching your start time did not succed. Please make a manual note of present time.";
                 return View("Index");
             }
             measuredTime = TimeMeasurement.stopClock(measuredTime);
@@ -132,7 +131,7 @@ namespace RegTempus.Controllers
             }
             catch (NullReferenceException)
             {
-                ViewBag.Message = "Updating your start time did not succed. Please make a manual note of present time.";
+                ViewBag.ErrorMessage = "Error: Updating your start time did not succed. Please make a manual note of present time.";
                 return View("Index");
             }
             registrator.StartedTimeMeasurement = 0;
@@ -140,15 +139,35 @@ namespace RegTempus.Controllers
             {
                 registrator = _iRegTempus.UpdateRegistrator(registrator);
             }
-            catch (Exception)
+            catch (NullReferenceException)
             {
-                ViewBag.Message = "Updating your data did not succed. Please make a manual note of present time.";
+                ViewBag.ErrorMessage = "Error: Updating your data did not succed. Please make a manual note of present time.";
                 return View("Index");
             }
+            ViewBag.SuccessMessage = "Your stop time is registered.";
             UserTimeRegistrationViewModel konvertedRegistrator = UserTimeRegistrationViewModel.RestructureTheRegistratorData(registrator);
             return View("Index", konvertedRegistrator);
         }
 
+        [HttpPost]
+        public IActionResult PresentRegistrations(int registratorId)
+        {
+            Registrator registrator = new Registrator
+            {
+                RegistratorId = registratorId
+            };
+            try
+            {
+                registrator = _iRegTempus.GetRegistratorBasedOnRegistratorId(registrator);
+            }
+            catch (NullReferenceException)
+            {
+                ViewBag.ErrorMessage = "Error: Fetching your data did not succed. Please try again.";
+                return View("Index");
+            }
+
+            return View();
+        }
 
     }
 }
