@@ -45,11 +45,6 @@ namespace RegTempus.Services
             return MonthFulOfRegistrations.Where(r => r.RegistratorId == user.RegistratorId).ToList();
         }
 
-        //public Registrator GetRegistrator(Registrator user)
-        //{
-        //    return _context.Registrators.SingleOrDefault(r => r.RegistratorId == user.RegistratorId);
-        //}
-
         public Registrator GetRegistratorBasedOnRegistratorId(Registrator user)
         {
             return _context.Registrators.SingleOrDefault(r => r.RegistratorId == user.RegistratorId);
