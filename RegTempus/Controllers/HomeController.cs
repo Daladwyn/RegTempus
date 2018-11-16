@@ -152,6 +152,8 @@ namespace RegTempus.Controllers
         [HttpPost]
         public IActionResult PresentRegistrations(int registratorId)
         {
+            //int monthOfYear;
+            List<TimeMeasurement> presentMonthTimeMesurements = new List<TimeMeasurement>();
             Registrator registrator = new Registrator
             {
                 RegistratorId = registratorId
@@ -165,8 +167,19 @@ namespace RegTempus.Controllers
                 ViewBag.ErrorMessage = "Error: Fetching your data did not succed. Please try again.";
                 return View("Index");
             }
-
-            return View();
+            
+            try
+            {
+                presentMonthTimeMesurements =  _iRegTempus.GetMonthlyTimeMeasurement(DateTime.Now.Month);
+            }
+            catch (NullReferenceException)
+            {
+                ViewBag.ErrorMessage = "Error: No registrations was found for the present month.";
+                return View();
+            }
+            ViewBag.Month = DateTime.Now.Month.ToString();
+            List<PresentRegisteredTimeViewModel> currentMonthRegistrations = PresentRegisteredTimeViewModel.CalculateTime(presentMonthTimeMesurements);
+            return View(currentMonthRegistrations);
         }
 
     }

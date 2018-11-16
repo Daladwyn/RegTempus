@@ -1,0 +1,50 @@
+﻿@model List<RegTempus.ViewModels.PresentRegisteredTimeViewModel>
+
+@{
+    ViewData["Title"] = "PresentRegistrations";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col">
+        @ViewBag.Month
+    </div>
+</div>
+<div class="row">
+    <div class="col-2 col-sm-2 col-md-2">
+        <span>Day</span>
+    </div>
+    <div class="col-2 col-sm-2 col-md-2">
+        <span>Start</span>
+    </div>
+    <div class="col-2 col-sm-2 col-md-2">
+        <span>Stop</span>
+    </div>
+    <div class="col-2 col-sm-2 col-md-2">
+        <span>Break</span>
+    </div>
+    <div class="col-4 col-sm-4 col-md-4">
+    </div>
+</div>
+@foreach (var day in Model)
+{
+
+    <div class="row">
+        <div class="col-2 col-sm-2 col-md-2">
+            @day.Day
+        </div>
+        <div class="col-2 col-sm-2 col-md-2">
+            @day.TimeStart.ToShortTimeString()
+        </div>
+        <div class="col-2 col-sm-2 col-md-2">
+            @day.TimeStop.ToShortTimeString()
+        </div>
+        <div class="col-2 col-sm-2 col-md-2">
+            @day.TimeBreak
+        </div>
+        <div class="col-4 col-sm-4 col-md-4">
+        </div>
+    </div>
+}
+
+

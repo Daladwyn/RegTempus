@@ -39,7 +39,7 @@ namespace RegTempus.Services
             return user;
         }
 
-        public IEnumerable<TimeMeasurement> GetMonthlyTimeMeasurement(int monthOfYear)
+        public List<TimeMeasurement> GetMonthlyTimeMeasurement(int monthOfYear)
         {
             return _context.TimeMeasurements.Where(m => m.MonthOfYear == monthOfYear).ToList();
         }

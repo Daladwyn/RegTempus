@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using RegTempus.ViewModels;
 
 namespace RegTempus.Models
 {
@@ -50,5 +52,7 @@ namespace RegTempus.Models
             measuredTime.TimeRegistered = measuredTime.TimeStop - measuredTime.TimeStart;
             return measuredTime;
         }
+
+       
     }
 }

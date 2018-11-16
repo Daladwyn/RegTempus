@@ -11,7 +11,7 @@ namespace RegTempus.Services
         TimeMeasurement CreateNewMeasurement(TimeMeasurement timeStart);
         TimeMeasurement CompleteTimeMeasurement(TimeMeasurement timeStop);
         TimeMeasurement GetTimeMeasurement(Registrator user);
-        IEnumerable<TimeMeasurement> GetMonthlyTimeMeasurement(int monthOfYear);
+        List<TimeMeasurement> GetMonthlyTimeMeasurement(int monthOfYear);
         Registrator GetRegistratorBasedOnRegistratorId(Registrator user);
         Registrator GetRegistratorBasedOnUserId(Registrator user);
         Registrator UpdateRegistrator(Registrator user);
