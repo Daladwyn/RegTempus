@@ -154,6 +154,8 @@ namespace RegTempus.Controllers
         {
             //int monthOfYear;
             List<TimeMeasurement> presentMonthTimeMesurements = new List<TimeMeasurement>();
+            int currentMonth = DateTime.Now.Month;
+            string currentMonthAsString = Convert.ToString(DateTime.Now.Month);
             Registrator registrator = new Registrator
             {
                 RegistratorId = registratorId
@@ -167,17 +169,17 @@ namespace RegTempus.Controllers
                 ViewBag.ErrorMessage = "Error: Fetching your data did not succed. Please try again.";
                 return View("Index");
             }
-            
+
             try
             {
-                presentMonthTimeMesurements =  _iRegTempus.GetMonthlyTimeMeasurement(DateTime.Now.Month);
+                presentMonthTimeMesurements = _iRegTempus.GetMonthlyTimeMeasurement(currentMonth,registrator);
             }
             catch (NullReferenceException)
             {
                 ViewBag.ErrorMessage = "Error: No registrations was found for the present month.";
                 return View();
             }
-            ViewBag.Month = DateTime.Now.Month.ToString();
+            ViewBag.Month = DateTime.Now.Month;
             List<PresentRegisteredTimeViewModel> currentMonthRegistrations = PresentRegisteredTimeViewModel.CalculateTime(presentMonthTimeMesurements);
             return View(currentMonthRegistrations);
         }

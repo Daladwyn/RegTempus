@@ -6,8 +6,16 @@
 }
 
 <div class="row">
-    <div class="col">
+    <div class="col-3">
         @ViewBag.Month
+    </div>
+    <div class="col-7">
+
+    </div>
+    <div class="col-2">
+        <form asp-controller="Home" asp-action="Index" method="post">
+            <input class="btn btn-primary" type="submit" name="name" value="Time registration" />
+</form>
     </div>
 </div>
 <div class="row">
@@ -40,7 +48,7 @@
             @day.TimeStop.ToShortTimeString()
         </div>
         <div class="col-2 col-sm-2 col-md-2">
-            @day.TimeBreak
+            @day.TimeBreak.ToString()
         </div>
         <div class="col-4 col-sm-4 col-md-4">
         </div>
