@@ -5,19 +5,17 @@
     Layout = "~/Views/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col-3">
-        @ViewBag.Month
-    </div>
-    <div class="col-7">
-
-    </div>
-    <div class="col-2">
+<ul class="nav">
+    <li class="nav-item">
         <form asp-controller="Home" asp-action="Index" method="post">
             <input class="btn btn-primary" type="submit" name="name" value="Time registration" />
-</form>
-    </div>
-</div>
+        </form>
+    </li>
+    <li class="nav-item">
+        @ViewBag.Month
+    </li>
+</ul>
+
 <div class="row">
     <div class="col-2 col-sm-2 col-md-2">
         <span>Day</span>
@@ -42,13 +40,14 @@
             @day.Day
         </div>
         <div class="col-2 col-sm-2 col-md-2">
-            @day.TimeStart.ToShortTimeString()
+            <div id="">@day.TimeStart.ToShortTimeString()</div>
+            <button class=""></button>
         </div>
         <div class="col-2 col-sm-2 col-md-2">
-            @day.TimeStop.ToShortTimeString()
+            <div>@day.TimeStop.ToShortTimeString()</div>
         </div>
         <div class="col-2 col-sm-2 col-md-2">
-            @day.TimeBreak.ToString()
+            <div>@day.TimeBreakString</div>
         </div>
         <div class="col-4 col-sm-4 col-md-4">
         </div>

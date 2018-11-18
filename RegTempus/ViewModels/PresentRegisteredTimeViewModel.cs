@@ -22,6 +22,8 @@ namespace RegTempus.ViewModels
 
         public TimeSpan TimeBreak { get; set; }
 
+        public string TimeBreakString { get; set; }
+
         internal static List<PresentRegisteredTimeViewModel> CalculateTime(List<TimeMeasurement> MonthMesurement)
         {
             List<PresentRegisteredTimeViewModel> calculatedTimeList = new List<PresentRegisteredTimeViewModel>();
@@ -31,7 +33,7 @@ namespace RegTempus.ViewModels
                 TimeStop = MonthMesurement[0].TimeStop,
                 Day = MonthMesurement[0].DayOfMonth,
                 TimeBreak = TimeSpan.Zero,
-
+                
             };
 
             for (int i = 1; i < MonthMesurement.Count(); i++)
@@ -41,6 +43,7 @@ namespace RegTempus.ViewModels
                     if (aDay.TimeStop < MonthMesurement[i].TimeStart)
                     {
                         aDay.TimeBreak = aDay.TimeBreak + (MonthMesurement[i].TimeStart - aDay.TimeStop);
+                        aDay.TimeBreakString = aDay.TimeBreak.ToString(@"hh\:mm\:ss");
                         aDay.TimeStop = MonthMesurement[i].TimeStop;
                     }
                 }
@@ -52,7 +55,7 @@ namespace RegTempus.ViewModels
                     aDay.TimeStop = MonthMesurement[i].TimeStop;
                     aDay.Day = MonthMesurement[i].DayOfMonth;
                     aDay.TimeBreak = TimeSpan.Zero;
-
+                    aDay.TimeBreakString = aDay.TimeBreak.ToString(@"hh\:mm\:ss");
                     i--;
                 }
 

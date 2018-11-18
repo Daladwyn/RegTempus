@@ -155,7 +155,10 @@ namespace RegTempus.Controllers
             //int monthOfYear;
             List<TimeMeasurement> presentMonthTimeMesurements = new List<TimeMeasurement>();
             int currentMonth = DateTime.Now.Month;
-            string currentMonthAsString = Convert.ToString(DateTime.Now.Month);
+            DateTime cM = DateTime.Now;
+            string currentMonthAsString = cM.ToString("yyyy MMMM");
+
+            ViewBag.Month = currentMonthAsString;
             Registrator registrator = new Registrator
             {
                 RegistratorId = registratorId
@@ -179,7 +182,6 @@ namespace RegTempus.Controllers
                 ViewBag.ErrorMessage = "Error: No registrations was found for the present month.";
                 return View();
             }
-            ViewBag.Month = DateTime.Now.Month;
             List<PresentRegisteredTimeViewModel> currentMonthRegistrations = PresentRegisteredTimeViewModel.CalculateTime(presentMonthTimeMesurements);
             return View(currentMonthRegistrations);
         }
