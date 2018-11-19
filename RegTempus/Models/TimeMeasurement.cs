@@ -29,6 +29,11 @@ namespace RegTempus.Models
         [Range(1900, 2100)]
         public int Year { get; set; }
 
+        /// <summary>
+        /// The basic function of starting the clock.
+        /// </summary>
+        /// <param name="registrator"></param>
+        /// <returns></returns>
         public static TimeMeasurement startClock(Registrator registrator)
         {
             TimeMeasurement measuredTime = new TimeMeasurement
@@ -37,7 +42,6 @@ namespace RegTempus.Models
                 RegistratorId = registrator.RegistratorId,
                 TimeStart = DateTime.Now,
                 TimeStop = DateTime.Now,
-                //TimeRegistered = 0,
                 DayOfMonth = DateTime.Today.Day,
                 MonthOfYear = DateTime.Today.Month,
                 Year = DateTime.Today.Year,
@@ -46,13 +50,67 @@ namespace RegTempus.Models
             return measuredTime;
         }
 
-        public static TimeMeasurement stopClock(TimeMeasurement measuredTime)
+        /// <summary>
+        /// this function sets start time to the date and at 0 hours, 0 minutes and 0 seconds.
+        /// stop time is present time when the function invokes.
+        /// </summary>
+        /// <param name="registrator"></param>
+        /// <param name="stopTime"></param>
+        /// <returns></returns>
+        public static TimeMeasurement complexStartAndStopClock(Registrator registrator, DateTime stopTime)
         {
-            measuredTime.TimeStop = DateTime.Now;
+            int year = stopTime.Year;
+            int month = stopTime.Month;
+            int day = stopTime.Day;
+            DateTime timestart = stopTime;
+            timestart.Subtract(stopTime);
+            timestart.AddYears(year);
+            timestart.AddMonths(month);
+            timestart.AddDays(day);
+            TimeMeasurement measuredTime = new TimeMeasurement
+            {
+                TimeMeasurementId = 0,
+                RegistratorId = registrator.RegistratorId,
+                TimeStart = timestart,
+                TimeStop = stopTime,
+                DayOfMonth = DateTime.Today.Day,
+                MonthOfYear = DateTime.Today.Month,
+                Year = DateTime.Today.Year,
+                TimeType = "Work"
+            };
+            return measuredTime;
+        }
+        /// <summary>
+        /// The basic function to stop the clock.
+        /// This function checks the dates so its the same date on start and stop.
+        /// If not same dates, calls another funktion that creates the new registration.
+        /// </summary>
+        /// <param name="measuredTime"></param>
+        /// <returns></returns>
+        public static TimeMeasurement stopClock(TimeMeasurement measuredTime, DateTime stopTime)
+        {
+            measuredTime.TimeStop = stopTime;
             measuredTime.TimeRegistered = measuredTime.TimeStop - measuredTime.TimeStart;
             return measuredTime;
         }
 
-       
+        /// <summary>
+        /// this function sets stoptime to 23:59:59.
+        /// </summary>
+        /// <param name="measuredTime"></param>
+        /// <returns></returns>
+        public static TimeMeasurement complexStopClock(TimeMeasurement measuredTime)
+        {
+            double hour = measuredTime.TimeStop.Hour;
+            double minutes = measuredTime.TimeStop.Minute;
+            double seconds = measuredTime.TimeStop.Second;
+            hour = 23 - hour;
+            minutes = 59 - minutes;
+            seconds = 59 - seconds;
+            measuredTime.TimeStop.AddHours(hour);
+            measuredTime.TimeStop.AddMinutes(minutes);
+            measuredTime.TimeStop.AddSeconds(seconds);
+            return measuredTime;
+        }
     }
 }

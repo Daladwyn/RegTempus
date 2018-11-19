@@ -124,14 +124,34 @@ namespace RegTempus.Controllers
                 ViewBag.ErrorMessage = "Error: Fetching your start time did not succed. Please make a manual note of present time.";
                 return View("Index");
             }
-            measuredTime = TimeMeasurement.stopClock(measuredTime);
+            DateTime stopTime = DateTime.Now;
+            if (measuredTime.TimeStart.DayOfYear == stopTime.DayOfYear)
+            {
+                measuredTime = TimeMeasurement.stopClock(measuredTime,stopTime);
+            }
+            else
+            {
+                measuredTime = TimeMeasurement.complexStopClock(measuredTime);
+
+                TimeMeasurement newMeasuredTime = TimeMeasurement.complexStartAndStopClock(registrator, stopTime);
+                try
+                {
+                    newMeasuredTime = _iRegTempus.CompleteTimeMeasurement(newMeasuredTime);
+                }
+                catch (NullReferenceException)
+                {
+                    ViewBag.ErrorMessage = "Error: Updating your stop time did not succed. Please make a manual note of present time.";
+                    return View("Index");
+                }
+            }
+                       
             try
             {
                 measuredTime = _iRegTempus.CompleteTimeMeasurement(measuredTime);
             }
             catch (NullReferenceException)
             {
-                ViewBag.ErrorMessage = "Error: Updating your start time did not succed. Please make a manual note of present time.";
+                ViewBag.ErrorMessage = "Error: Updating your stop time did not succed. Please make a manual note of present time.";
                 return View("Index");
             }
             registrator.StartedTimeMeasurement = 0;
