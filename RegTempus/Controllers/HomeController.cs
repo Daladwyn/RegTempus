@@ -127,7 +127,7 @@ namespace RegTempus.Controllers
             DateTime stopTime = DateTime.Now;
             if (measuredTime.TimeStart.DayOfYear == stopTime.DayOfYear)
             {
-                measuredTime = TimeMeasurement.stopClock(measuredTime,stopTime);
+                measuredTime = TimeMeasurement.stopClock(measuredTime, stopTime);
             }
             else
             {
@@ -144,7 +144,7 @@ namespace RegTempus.Controllers
                     return View("Index");
                 }
             }
-                       
+
             try
             {
                 measuredTime = _iRegTempus.CompleteTimeMeasurement(measuredTime);
@@ -174,11 +174,12 @@ namespace RegTempus.Controllers
         {
             //int monthOfYear;
             List<TimeMeasurement> presentMonthTimeMesurements = new List<TimeMeasurement>();
-            int currentMonth = DateTime.Now.Month;
-            DateTime cM = DateTime.Now;
-            string currentMonthAsString = cM.ToString("yyyy MMMM");
-
+            DateTime currentMonth = DateTime.Now;
+            int currentMonthAsInt = currentMonth.Month;
+            string currentMonthAsString = currentMonth.ToString("yyyy MMMM");
             ViewBag.Month = currentMonthAsString;
+
+            ViewBag.NextMonth = "";
             Registrator registrator = new Registrator
             {
                 RegistratorId = registratorId
@@ -195,7 +196,7 @@ namespace RegTempus.Controllers
 
             try
             {
-                presentMonthTimeMesurements = _iRegTempus.GetMonthlyTimeMeasurement(currentMonth,registrator);
+                presentMonthTimeMesurements = _iRegTempus.GetMonthlyTimeMeasurement(currentMonthAsInt, registrator);
             }
             catch (NullReferenceException)
             {
